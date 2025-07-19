@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental: Importancia de la Comunicación en los Territorios</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .student-info {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .mind-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-height: 800px;
+        }
+        
+        .central-node {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            z-index: 10;
+            margin: 40px 0;
+        }
+        
+        .branches {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 50px;
+        }
+        
+        .branch {
+            position: relative;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .branch:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .branch1 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .branch2 {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+        
+        .branch3 {
+            background: linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%);
+        }
+        
+        .branch4 {
+            background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+        }
+        
+        .branch-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(51,51,51,0.2);
+        }
+        
+        .sub-branches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .sub-branch {
+            background: rgba(255,255,255,0.7);
+            padding: 15px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .sub-branch h4 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .sub-branch ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .sub-branch li {
+            margin: 8px 0;
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        .connecting-line {
+            position: absolute;
+            background: #667eea;
+            z-index: 1;
+        }
+        
+        .line1 {
+            width: 3px;
+            height: 100px;
+            top: 50%;
+            left: 25%;
+            transform: rotate(-45deg);
+        }
+        
+        .line2 {
+            width: 3px;
+            height: 100px;
+            top: 50%;
+            right: 25%;
+            transform: rotate(45deg);
+        }
+        
+        .line3 {
+            width: 3px;
+            height: 100px;
+            bottom: 50%;
+            left: 25%;
+            transform: rotate(45deg);
+        }
+        
+        .line4 {
+            width: 3px;
+            height: 100px;
+            bottom: 50%;
+            right: 25%;
+            transform: rotate(-45deg);
+        }
+        
+        .references {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .references h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        
+        .references p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .branches {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .sub-branches {
+                grid-template-columns: 1fr;
+            }
+            
+            .central-node {
+                width: 200px;
+                height: 200px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>La Importancia de la Comunicación en los Territorios</h1>
+        </div>
+        
+        <div class="student-info">
+            <strong>Estudiante:</strong> Zayra Jiménez Hinojos<br>
+            <strong>División:</strong> Ciencias Sociales y Administrativas | 
+            <strong>Semestre:</strong> Segundo | 
+            <strong>Asignatura:</strong> Comunicación para el desarrollo | 
+            <strong>Unidad:</strong> 1. Principios de la comunicación
+        </div>
+        
+        <div class="mind-map">
+            <div class="central-node">
+                IMPORTANCIA DE LA COMUNICACIÓN EN LOS TERRITORIOS
+            </div>
+            
+            <div class="branches">
+                <div class="branch branch1">
+                    <div class="branch-title">Beneficios y Desventajas para el Desarrollo</div>
+                    <div class="sub-branches">
+                        <div class="sub-branch">
+                            <h4>BENEFICIOS</h4>
+                            <ul>
+                                <li>Fortalece la identidad cultural local</li>
+                                <li>Facilita la participación ciudadana</li>
+                                <li>Promueve el desarrollo económico sostenible</li>
+                                <li>Mejora la cohesión social</li>
+                                <li>Democratiza el acceso a la información</li>
+                                <li>Potencia el capital social comunitario</li>
+                            </ul>
+                        </div>
+                        <div class="sub-branch">
+                            <h4>DESVENTAJAS</h4>
+                            <ul>
+                                <li>Puede generar exclusión digital</li>
+                                <li>Riesgo de homogenización cultural</li>
+                                <li>Dependencia tecnológica externa</li>
+                                <li>Posible manipulación informativa</li>
+                                <li>Amplificación de conflictos locales</li>
+                                <li>Deterioro de tradiciones orales</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="branch branch2">
+                    <div class="branch-title">Necesidades e Impedimentos Comunitarios</div>
+                    <div class="sub-branches">
+                        <div class="sub-branch">
+                            <h4>NECESIDADES</h4>
+                            <ul>
+                                <li>Infraestructura tecnológica básica</li>
+                                <li>Capacitación en medios digitales</li>
+                                <li>Contenidos en lenguas originarias</li>
+                                <li>Espacios de diálogo intercultural</li>
+                                <li>Canales de comunicación bidireccional</li>
+                                <li>Preservación de saberes ancestrales</li>
+                            </ul>
+                        </div>
+                        <div class="sub-branch">
+                            <h4>IMPEDIMENTOS</h4>
+                            <ul>
+                                <li>Limitaciones geográficas y topográficas</li>
+                                <li>Barreras idiomáticas y culturales</li>
+                                <li>Falta de recursos económicos</li>
+                                <li>Desconfianza hacia nuevas tecnologías</li>
+                                <li>Analfabetismo digital y funcional</li>
+                                <li>Conflictos internos comunitarios</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="branch branch3">
+                    <div class="branch-title">Posibilidades y Dificultades de Implementación</div>
+                    <div class="sub-branches">
+                        <div class="sub-branch">
+                            <h4>POSIBILIDADES</h4>
+                            <ul>
+                                <li>Redes comunitarias autogestionadas</li>
+                                <li>Medios de comunicación participativos</li>
+                                <li>Plataformas digitales adaptadas</li>
+                                <li>Alianzas público-privadas</li>
+                                <li>Modelos de comunicación horizontal</li>
+                                <li>Integración de medios tradicionales</li>
+                            </ul>
+                        </div>
+                        <div class="sub-branch">
+                            <h4>DIFICULTADES</h4>
+                            <ul>
+                                <li>Costos elevados de implementación</li>
+                                <li>Mantenimiento técnico especializado</li>
+                                <li>Resistencia al cambio generacional</li>
+                                <li>Competencia con medios masivos</li>
+                                <li>Sostenibilidad financiera a largo plazo</li>
+                                <li>Capacitación continua requerida</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="branch branch4">
+                    <div class="branch-title">Compromisos y Avenencias entre Actores</div>
+                    <div class="sub-branches">
+                        <div class="sub-branch">
+                            <h4>COMPROMISOS</h4>
+                            <ul>
+                                <li>Respeto a la diversidad cultural</li>
+                                <li>Inversión en infraestructura local</li>
+                                <li>Formación de comunicadores comunitarios</li>
+                                <li>Políticas públicas incluyentes</li>
+                                <li>Transparencia en la gestión</li>
+                                <li>Evaluación participativa continua</li>
+                            </ul>
+                        </div>
+                        <div class="sub-branch">
+                            <h4>AVENENCIAS</h4>
+                            <ul>
+                                <li>Equilibrio entre tradición e innovación</li>
+                                <li>Distribución equitativa de recursos</li>
+                                <li>Consensos sobre contenidos apropiados</li>
+                                <li>Mediación en conflictos de intereses</li>
+                                <li>Coordinación inter-institucional</li>
+                                <li>Adaptación a contextos específicos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="references">
+            <h3>Referencias Bibliográficas (Formato APA)</h3>
+            <p>Beltrán, L. R. (2005). <em>La comunicación para el desarrollo en Latinoamérica: Un recuento de medio siglo</em>. Buenos Aires: Norma.</p>
+            <p>Gumucio-Dagron, A. (2004). El cuarto mosquetero: La comunicación para el cambio social. <em>Investigación y Desarrollo</em>, 12(1), 2-23.</p>
+            <p>Kaplún, M. (1998). <em>Una pedagogía de la comunicación</em>. Madrid: Ediciones de la Torre.</p>
+            <p>Servaes, J. (2012). Comunicación para el desarrollo y cambio social. <em>Signo y Pensamiento</em>, 31(60), 20-29.</p>
+            <p>UNESCO. (2020). <em>Comunicación comunitaria y desarrollo territorial sostenible</em>. París: UNESCO Publishing.</p>
+        </div>
+    </div>
+</body>
+</html>
